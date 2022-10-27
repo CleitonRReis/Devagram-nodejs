@@ -1,2 +1,2 @@
 # Devagram-nodejs
-Projeto Devaria 2022.
+Projeto Devagram Backend em Node.js com Next.js - 2022.
