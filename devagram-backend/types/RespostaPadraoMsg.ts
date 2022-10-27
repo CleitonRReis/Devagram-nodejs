@@ -1,4 +1,4 @@
 export type RespostaPadraoMsg = {
-  messaage? : string,
+  message? : string,
   error? : string
 };
