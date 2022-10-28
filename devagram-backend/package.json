@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "md5": "^2.3.0",
     "mongoose": "^6.7.0",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.2",
     "@types/node": "18.11.7",
     "@types/react": "18.0.23",
     "@types/react-dom": "18.0.7",

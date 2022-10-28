@@ -1,14 +1,22 @@
+import md5 from 'md5';
+import { UsuarioModel } from '../../models/UsuarioModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
+import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 
-const endpointLogin = (req : NextApiRequest, res : NextApiResponse<RespostaPadraoMsg> ) => {
+const endpointLogin = async (req : NextApiRequest, res : NextApiResponse<RespostaPadraoMsg> ) => {
   if (req.method === 'POST') {
-    const { usuario, senha } = req.body;
-    
-    if (usuario === 'cleiton@dev.com.br' && senha === '12345') {
+    const { login, senha } = req.body;
+    const buscarUsuario = await UsuarioModel.find({
+      email : login,
+      senha : md5(senha)
+    });
+
+    if (buscarUsuario && buscarUsuario.length > 0) {
+      const usuarioEncontrado = buscarUsuario[0];
+
       return res.status(200).json({
-        message: 'Usuário autenticado com sucesso!'
+        message: `Usuário ${ usuarioEncontrado.nome } autenticado com sucesso!`
       });
     }
     return res.status(400).json({
