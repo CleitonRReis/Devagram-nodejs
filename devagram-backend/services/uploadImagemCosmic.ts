@@ -26,7 +26,7 @@ const uploadImagemCosmic = async (req : any) => {
   console.log('uploadImagemCosmic', req)
   if (req?.file?.originalname) {
     const media_object = {
-      originalName : req.file.originalname,
+      originalname : req.file.originalname,
       buffer : req.file.buffer
     };
 
