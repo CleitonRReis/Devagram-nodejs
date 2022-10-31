@@ -11,7 +11,6 @@ const handler = nextConnect()
   .use(upload.single('file'))
   .post(async (req : NextApiRequest, res : NextApiResponse<RespostaPadraoMsg>) => {
     try {
-      console.log('cadastrar usuario', req.body)
       const usuario = req.body as CadastroRequisicao;
       const validarNome = !usuario.nome || usuario.nome.length < 2;
       const validarSenha = !usuario.senha || usuario.senha.length < 4;
@@ -50,7 +49,6 @@ const handler = nextConnect()
 
       //enviar imagem do multer para o cosmicjs
       const image = await uploadImagemCosmic(req);
-      console.log('image bla', image);
 
       const usuarioASerSalvo = {
         nome: usuario.nome,
