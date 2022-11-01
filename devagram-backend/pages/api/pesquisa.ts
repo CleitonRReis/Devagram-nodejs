@@ -1,13 +1,26 @@
+import { UsuarioModel } from '../../models/UsuarioModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
-import { UsuarioModel } from '../../models/UsuarioModel';
 
 const pesquisaEndpoint = 
   async (req : NextApiRequest, res : NextApiResponse<RespostaPadraoMsg | any[]>) => {
     try {
       if (req.method === 'GET') {
+        if (req?.query?.id) {
+          const usuarioEncontrado = await UsuarioModel.findById(req?.query?.id);
+
+          if (!usuarioEncontrado) {
+            return res.status(400).json({
+              error : 'Desculpe! Usuário não encontrado.'
+            });
+          }
+
+          usuarioEncontrado.senha = null;
+          return res.status(200).json(usuarioEncontrado);
+        }
+      } else {
         const { filtro } = req?.query;
 
         if (!filtro || filtro.length < 2) {
@@ -25,7 +38,6 @@ const pesquisaEndpoint =
 
         return res.status(200).json(usuariosEncontrados);
       }
-
 
       return res.status(405).json({
         error : `Método de requisição informado: ${ req.method } não é válido!`
