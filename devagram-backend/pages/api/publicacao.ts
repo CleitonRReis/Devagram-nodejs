@@ -6,7 +6,6 @@ import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
 import { upload, uploadImagemCosmic } from '../../services/uploadImagemCosmic';
-import { json } from 'stream/consumers';
 
 const handler = nextConnect()
   .use(upload.single('file'))
