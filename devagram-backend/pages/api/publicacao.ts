@@ -47,6 +47,11 @@ const handler = nextConnect()
         idUsuario : usuario._id,
       }
 
+      usuario.publicacoes++;
+      await UsuarioModel.findByIdAndUpdate({
+        _id : usuario._id
+      }, usuario);
+
       await PublicacaoModel.create(publicacaoASerSalva);
 
       return res.status(200).json({
