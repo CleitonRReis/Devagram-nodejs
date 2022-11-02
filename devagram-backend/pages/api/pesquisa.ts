@@ -19,24 +19,24 @@ const pesquisaEndpoint =
 
           usuarioEncontrado.senha = null;
           return res.status(200).json(usuarioEncontrado);
-        }
-      } else {
-        const { filtro } = req?.query;
-
-        if (!filtro || filtro.length < 2) {
-          res.status(400).json({
-            error : 'Favor informar, pelo menos, dois caracteres'
+        } else {
+          const { filtro } = req?.query;
+  
+          if (!filtro || filtro.length < 2) {
+            res.status(400).json({
+              error : 'Favor informar, pelo menos, dois caracteres'
+            });
+          }
+  
+          const usuariosEncontrados = await UsuarioModel.find({
+            $or : [
+              { nome : { $regex : filtro, $options: 'i'} },
+              { email : { $regex : filtro, $options: 'i' } }
+            ]
           });
+  
+          return res.status(200).json(usuariosEncontrados);
         }
-
-        const usuariosEncontrados = await UsuarioModel.find({
-          $or : [
-            { nome : { $regex : filtro, $options: 'i'} },
-            { email : { $regex : filtro, $options: 'i' } }
-          ]
-        });
-
-        return res.status(200).json(usuariosEncontrados);
       }
 
       return res.status(405).json({
