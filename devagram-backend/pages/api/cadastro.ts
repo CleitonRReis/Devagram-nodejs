@@ -2,6 +2,7 @@ import md5 from 'md5';
 import nextConnect from 'next-connect';
 import { UsuarioModel } from '../../models/UsuarioModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
 import type { CadastroRequisicao } from '../../types/CadastroRequisicao';
@@ -62,8 +63,8 @@ const handler = nextConnect()
         message : 'Usuário cadastrado com sucesso!'
       });
     }
-    catch(e) {
-      console.log(e)
+    catch(error) {
+      console.log(error)
       return res.status(500).json({
         error : 'Erro ao cadastrar usuário!'
     });
@@ -76,4 +77,4 @@ export const config = {
   }
 }
 
-export default conectarMongoDB(handler);
+export default politicaCORS(conectarMongoDB(handler));

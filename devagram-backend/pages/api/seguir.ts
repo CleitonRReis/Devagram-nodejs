@@ -1,6 +1,7 @@
 import { UsuarioModel } from '../../models/UsuarioModel';
 import { SeguidorModel } from '../../models/SeguidorModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
@@ -81,4 +82,4 @@ const endpointSeguir =
     }
 }
 
-export default validarTokenJWT(conectarMongoDB(endpointSeguir));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(endpointSeguir)));

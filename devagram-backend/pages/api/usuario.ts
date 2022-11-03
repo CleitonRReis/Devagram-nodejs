@@ -1,6 +1,7 @@
 import nextConnect from 'next-connect';
 import { UsuarioModel } from '../../models/UsuarioModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
@@ -24,7 +25,7 @@ const handler = nextConnect()
         usuario.nome = nome;
       }
 
-      const { file } = req;
+      const { file } = req?.body;
       console.log('req', req);
       if (file && file.originalname) {
         const image = await uploadImagemCosmic(req);
@@ -68,4 +69,4 @@ export const config = {
   }
 }
 
-export default validarTokenJWT(conectarMongoDB(handler));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(handler)));

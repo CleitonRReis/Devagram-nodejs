@@ -2,6 +2,7 @@ import md5 from 'md5';
 import jwt from 'jsonwebtoken';
 import { UsuarioModel } from '../../models/UsuarioModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import type { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
 import type { LoginRespostaRequisicao } from '../../types/LoginResposta';
@@ -45,4 +46,4 @@ const endpointLogin =
     });
 }
 
-export default conectarMongoDB(endpointLogin);
+export default politicaCORS(conectarMongoDB(endpointLogin));

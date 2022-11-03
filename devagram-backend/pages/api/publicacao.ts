@@ -1,6 +1,7 @@
 import nextConnect from 'next-connect';
 import type { NextApiResponse } from 'next';
 import { UsuarioModel } from '../../models/UsuarioModel';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 import { PublicacaoModel } from '../../models/PublicacaoModel';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
@@ -71,4 +72,4 @@ export const config = {
   }
 }
 
-export default validarTokenJWT(conectarMongoDB(handler));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(handler)));

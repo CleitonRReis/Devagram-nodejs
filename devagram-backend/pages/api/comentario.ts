@@ -1,9 +1,10 @@
 import { UsuarioModel } from '../../models/UsuarioModel';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { politicaCORS } from '../../middlewares/politicaCORS';
+import { PublicacaoModel } from '../../models/PublicacaoModel';
 import { RespostaPadraoMsg } from '../../types/RespostaPadraoMsg';
 import { conectarMongoDB } from '../../middlewares/conectarMongoDB';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
-import { PublicacaoModel } from '../../models/PublicacaoModel';
 
 const comentarioEndpoint = async (req : NextApiRequest, res : NextApiResponse<RespostaPadraoMsg>) => {
   try {
@@ -57,4 +58,4 @@ const comentarioEndpoint = async (req : NextApiRequest, res : NextApiResponse<Re
   }
 };
 
-export default validarTokenJWT(conectarMongoDB(comentarioEndpoint));
+export default politicaCORS(validarTokenJWT(conectarMongoDB(comentarioEndpoint)));
